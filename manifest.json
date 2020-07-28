@@ -1,0 +1,21 @@
+{
+
+    "manifest_version": 2,
+    "name": "Downorway",
+    "version": "1.0",
+  
+    "description": "Downloads files from norwegianclass101",
+  
+    "icons": {
+      "48": "icons/icon.svg",
+      "96": "icons/icon.svg"
+    },
+  
+    "content_scripts": [
+      {
+        "matches": ["*://*.norwegianclass101.com/*"],
+        "js": ["downorway.js"]
+      }
+    ]
+  
+  }
