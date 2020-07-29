@@ -10,12 +10,29 @@
       "48": "icons/icon.svg",
       "96": "icons/icon.svg"
     },
-  
+
+    "permissions": [
+        "storage",
+        "activeTab",
+        "tabs",
+        "downloads"
+    ],
+
+    "browser_action": {
+        "default_icon":"icons/icon.svg",
+        "default_title": "Downorway"
+    },
+
+    "background": {
+        "scripts": ["background.js"]
+    },
+
     "content_scripts": [
-      {
-        "matches": ["*://*.norwegianclass101.com/*"],
-        "js": ["downorway.js"]
-      }
+        {
+            "matches": ["*://*.norwegianclass101.com/lesson/*"],
+            "js": ["downorway.js"]
+        }
     ]
+
   
   }
