@@ -1,0 +1,7 @@
+{
+    "name": "downorway",
+    "description": "Host downloading files from Firefox AddOn",
+    "path": "G:\\Cours\\CloudStation\\Projets\\Downorway\\app\\downorway_win.bat",
+    "type": "stdio",
+    "allowed_extensions": [ "@downorway" ]
+  }

@@ -6,8 +6,6 @@ browser.tabs.executeScript({file: "downorway.js"});
 // Adding a listener for a click on the extension
 browser.browserAction.onClicked.addListener(listenForClick);
 
-let path;
-
 // Adding the button click listener
 function listenForClick(){
     browser.tabs.query({active: true, currentWindow: true}).then(start).catch(reportError);
@@ -28,16 +26,12 @@ function reportError(error) {
 
 // Function downloading files from the adresses in message
 function download(message){
-    let toDownload = message.links;
-    let path = message.path;
-    for(let j = 0; j<toDownload.length; j++){
-        let downloading = browser.downloads.download(
-            {
-                url: toDownload[j],
-                //filename: path,
-                saveAs: false
-            });
-        //downloading.then(onStartedDownload, onFailed);
-    }
-    console.log("Done!");
+    browser.runtime.sendNativeMessage(
+        "downorway",
+        {
+            links: message.links,
+            path: message.path,
+            name: message.name
+        }
+    );
 }

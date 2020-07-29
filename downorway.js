@@ -28,7 +28,6 @@
     // Complete function to get links
     function getLinks(){
         let path = window.prompt("What's the path ?");
-        console.log("Starting to get links");
 
         // Get the name of the current lesson
         let xpathNumber = getFromXpath("/html/body/div[7]/div/div/div[1]/span[2]/div[2]/select/option[@selected]/text()", 1);
@@ -44,20 +43,9 @@
         let pdfNodes = xpathResultToArray(xpathPDFs, "https://www.norwegianclass101.com", 2)
         let audioNodes = xpathResultToArray(xpathAudios, "", 3)
 
-        // Display lesson title
-        console.log("Title: " + lessonName);
-        // Display PDFs links
-        for(let j = 0; j < 2; j++){
-            console.log(pdfNodes[j]);
-        }
-        // Display audio links
-        for(let j = 0; j < 3; j++){
-            console.log(audioNodes[j]);
-        }
-
         let links = pdfNodes.concat(audioNodes);
         if(links.length > 0){
-            return Promise.resolve({links: links, path: path});
+            return Promise.resolve({links: links, path: path, name: lessonName});
         }
         return Promise.reject("Failed to find links");
     }
