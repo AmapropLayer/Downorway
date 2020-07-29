@@ -10,14 +10,13 @@ let path;
 
 // Adding the button click listener
 function listenForClick(){
-    path = window.prompt("What's the path ?");
     browser.tabs.query({active: true, currentWindow: true}).then(start).catch(reportError);
 }
 
 // Send a "start" message to the content script in the active tab.
 function start(tabs) {
-    console.log("start1");
     browser.tabs.sendMessage(tabs[0].id, {message: "start"}).then(response => {
+        console.log(response);
         download(response);
     }).catch(reportError)
 }
@@ -29,17 +28,16 @@ function reportError(error) {
 
 // Function downloading files from the adresses in message
 function download(message){
-    console.log("GOT SHIT");
-    let toDownload = message.response;
+    let toDownload = message.links;
+    let path = message.path;
     for(let j = 0; j<toDownload.length; j++){
-        console.log("ONE");
         let downloading = browser.downloads.download(
             {
                 url: toDownload[j],
-                filename: path,
-                saveAs: "false"
+                //filename: path,
+                saveAs: false
             });
-        downloading.then(onStartedDownload, onFailed);
+        //downloading.then(onStartedDownload, onFailed);
     }
     console.log("Done!");
 }

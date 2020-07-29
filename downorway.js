@@ -27,6 +27,7 @@
 
     // Complete function to get links
     function getLinks(){
+        let path = window.prompt("What's the path ?");
         console.log("Starting to get links");
 
         // Get the name of the current lesson
@@ -56,17 +57,17 @@
 
         let links = pdfNodes.concat(audioNodes);
         if(links.length > 0){
-            return Promise.resolve({response: links});
+            return Promise.resolve({links: links, path: path});
         }
-        return Promise.reject(new Error("Failed to find links"));
+        return Promise.reject("Failed to find links");
     }
 
     // Listen to messages from the background script
     browser.runtime.onMessage.addListener(request => {
         if(request.message === "start"){
-            getLinks();
+            return getLinks();
         }else{
-            return Promise.reject(new Error("Unable to satisfy request"));
+            return Promise.reject("Unable to satisfy request");
         }
     });
 }
