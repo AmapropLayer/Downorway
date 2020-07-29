@@ -19,8 +19,9 @@ def getMessage():
         print('Decoding JSON has failed')
     return obtainedJson
 
-sys.stdout = open('debug.txt', 'w')
-sys.stderr = open('err.txt', 'w')
+#sys.stdout = open('debug.txt', 'w')
+#sys.stderr = open('err.txt', 'w')
+cookies = dict(PHPSESSID='m29ggtof44gqqmm39247sunt24')
 while True:
     receivedMessage = getMessage()
     path = receivedMessage["path"] + "\\" + receivedMessage["name"]
@@ -34,5 +35,9 @@ while True:
             splitted = l.split("/")
             localName = splitted[len(splitted)-1]
             localPath = path + "\\" + localName
-            r = requests.get(l, allow_redirects=True, stream=True)
-            open(localPath, 'wb').write(r.content)
+            r = requests.get(l, allow_redirects=True, stream=True, cookies=cookies)
+            # Mandatory for big files
+            with open(localPath, 'wb') as newfile:
+                for chunck in r.iter_content(chunk_size=1024):
+                    if chunck:
+                        newfile.write(chunck)
