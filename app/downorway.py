@@ -8,6 +8,7 @@ import urllib
 import requests
 
 def getMessage():
+    print("message!")
     rawLength = sys.stdin.buffer.read(4)
     if len(rawLength) == 0:
         sys.exit(0)
@@ -21,10 +22,10 @@ def getMessage():
 
 #sys.stdout = open('debug.txt', 'w')
 #sys.stderr = open('err.txt', 'w')
-cookies = dict(PHPSESSID='m29ggtof44gqqmm39247sunt24')
+cookies = dict(PHPSESSID='') # PHPSESSID here !
 while True:
     receivedMessage = getMessage()
-    path = receivedMessage["path"] + "\\" + receivedMessage["name"]
+    path = receivedMessage["path"] + "\\" + (receivedMessage["name"].replace('?', '').replace(':', '').replace('"', '').replace('!', ''))
     try:
         os.mkdir(path)
     except OSError:
@@ -32,6 +33,7 @@ while True:
     else:
         print("Successfully created the directory %s" % path)
         for l in receivedMessage["links"]:
+            print(l)
             splitted = l.split("/")
             localName = splitted[len(splitted)-1]
             localPath = path + "\\" + localName

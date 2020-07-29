@@ -38,13 +38,16 @@
         let xpathPDFs = getFromXpath("/html/body/div[7]/div/div/div[2]/div[1]/div[2]/div/span[3]/span/div/ul/li/a/@downloaddata-trackurl", 2);
         // Get video nodes
         let xpathAudios = getFromXpath("/html/body/div[7]/div/div/div[2]/div[1]/div[2]/div/span[4]/span/div/ul/li/a/@data-trackurl", 2);
-
         // Transform audio and pdf nodes to array
         let pdfNodes = xpathResultToArray(xpathPDFs, "https://www.norwegianclass101.com", 2)
         let audioNodes = xpathResultToArray(xpathAudios, "", 3)
 
         let links = pdfNodes.concat(audioNodes);
         if(links.length > 0){
+            console.log(lessonName);
+            for(let j=0; j<links.length; j++){
+                console.log(links[j]);
+            }
             return Promise.resolve({links: links, path: path, name: lessonName});
         }
         return Promise.reject("Failed to find links");
